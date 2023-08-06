@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, PanResponder, TouchableHighlight, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { PanResponder } from 'react-native';
+
+import Header from '../components/JokeGenerator/Header';
+import JokeSetup from '../components/JokeGenerator/JokeSetup';
+import DragBar from '../components/JokeGenerator/DragBar';
+import TextInputSection from '../components/JokeGenerator/TextInputSection';
+
 const { Configuration, OpenAIApi } = require("openai");
 
 const MyPage = () => {
@@ -38,7 +45,7 @@ const MyPage = () => {
     console.log(prompt);
     try {
       const completion = await openai.createChatCompletion({
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
         messages: [{role: "user", content: prompt,}],
       });
       console.log("response: ", completion.data.choices[0].message.content);
@@ -95,44 +102,25 @@ const MyPage = () => {
 
   return (
     <View style={styles.container}>
-      {/* Верхняя панель */}
-      <View style={styles.header}>
-        <Text style={styles.backLink}>Back to list</Text>
-      </View>
+      <Header onPressBack={() => { /* Handle back press */ }} />
 
-      {/* Центральная часть */}
+      {/* Joke Setup */}
       <Animatable.View
         style={[styles.centerContent, { height: centerContentHeight }]}
         animation="fadeIn"
       >
-        <TouchableHighlight onPress={handlePress} underlayColor="#ffffff">
-          {loading ? ( // Render the ActivityIndicator when loading is true
-            <ActivityIndicator size="small" color="#0000ff" />
-          ) : (
-            <Text style={[styles.centerText]}>{setupText}</Text>
-          )}
-        </TouchableHighlight>
-
-        {/* Здесь можно добавить компоненты с картинками */}
+        <JokeSetup
+          loading={loading}
+          setupText={setupText}
+          onPress={handlePress}
+        />
       </Animatable.View>
 
-      {/* Регулируемая палочка */}
-      <View style={styles.dragBarContainer} {...panResponder.panHandlers}>
-        <TouchableOpacity style={styles.dragBar} />
-      </View>
+      {/* Drag Bar */}
+      <DragBar panResponder={panResponder} />
 
-      {/* Поле для ввода текста */}
-      <View style={styles.textInputContainer}>
-        <View style={styles.textInputHeader}>
-          <Text style={styles.textInputHeaderText}>After drag bar</Text>
-          <Text style={styles.saveToNotes}>Save to notes</Text>
-        </View>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Input your punchline here"
-          multiline
-        />
-      </View>
+      {/* Text Input Section */}
+      <TextInputSection />
     </View>
   );
 };
@@ -145,77 +133,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
 
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-    borderBottomColor: '#CCCCCC', // Добавляем цвет нижней границы
-    borderBottomWidth: 1, // Добавляем толщину нижней границы
-  },
-  backLink: {
-    fontSize: 16,
-    marginLeft: 8,
-    marginBottom: 8,
-    color: 'black',
-  },
-  title: {
-    flex: 1, // Добавляем гибкость для элемента заголовка
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center', // Выравниваем текст по центру
-  },
   centerContent: {
     alignItems: 'center',
     marginBottom: 16,
-  },
-  centerText: {
-    fontSize: 20,
-    color: 'black',
-  },
-  dragBarContainer: {
-    backgroundColor: '#f2f2f2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  dragBar: {
-    backgroundColor: '#8b8b8b',
-    borderRadius: 4,
-    height: 8, // Set a fixed height for the drag bar
-    width: 40,
-  },
-  afterDragBarTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  textInputContainer: {
-    marginBottom: 16,
-    marginTop: 16,
-  },
-  textInputHeader: {
-    flexDirection: 'row', // Устанавливаем направление главной оси
-    justifyContent: 'space-between', // Распределяем элементы по оси X
-    alignItems: 'center', // Выравниваем элементы по оси Y
-    marginBottom: 8,
-  },
-  textInputHeaderText: {
-    color: 'black',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 16,
-  },
-  saveToNotes: {
-    fontSize: 16,
-    color: 'red',
-    marginRight: 8,
-  },
-  textInput: {
-    fontSize: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 16,
-    paddingRight: 16,
   },
 });
 
