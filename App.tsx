@@ -16,7 +16,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import JokeScreen from './src/screens/JokeScreen';
+import JokeScreen from './src/screens/JokeGeneratorScreen';
+import NoteEditor from './src/screens/NoteEditorScreen';
 
 import {
   Colors,
@@ -37,7 +38,7 @@ function App(): JSX.Element {
   };
 
   return (
-    <JokeScreen></JokeScreen>
+    <NoteEditor></NoteEditor>
   );
 }
 
