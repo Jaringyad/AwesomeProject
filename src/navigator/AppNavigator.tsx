@@ -15,6 +15,11 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Home"
+        screenOptions={{
+            headerShown: false,
+            tabBarIcon: undefined,
+            tabBarLabelStyle: styles.label,
+        }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
@@ -40,6 +45,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
+    fontFamily: 'Inter',
+    fontWeight: 'bold',
   },
 });
 

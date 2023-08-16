@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
-import HTMLView from 'react-native-htmlview';
 
 const EditorScreen = () => {
   const editor = useRef(null);
@@ -41,9 +40,6 @@ const EditorScreen = () => {
           // Добавьте ваш код для добавления изображения
         }}
       />
-      <View style={styles.htmlContainer}>
-        <HTMLView value={article} />
-      </View>
     </View>
   );
 };
