@@ -6,7 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseScreen from '../screens/ExerciseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import EditorScreen from '../screens/EditorScreen'
+import EditorScreen from '../screens/EditorScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,38 +16,45 @@ const AppNavigator = () => {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
-            headerShown: false,
-            tabBarIcon: undefined,
-            tabBarLabelStyle: styles.label,
+          headerShown: false,
+          tabBarLabelStyle: styles.label,
+          tabBarIcon: () => null,
+          tabBarStyle: styles.tabBarStyle
         }}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Search" component={SearchScreen} />
-        <Tab.Screen name="Editor" component={EditorScreen} />
-        <Tab.Screen name="Exercise" component={ExerciseScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen}
+        />
+        <Tab.Screen 
+          name="Search" 
+          component={SearchScreen}
+        />
+        <Tab.Screen 
+          name="Editor" 
+          component={EditorScreen} 
+        />
+        <Tab.Screen 
+          name="Exercise" 
+          component={ExerciseScreen} 
+        />
+        <Tab.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: 'white',
-    borderTopWidth: 2,
-    borderTopColor: 'lightgray',
-  },
-  activeLabel: {
-    color: 'blue',
-  },
-  inactiveLabel: {
-    color: 'gray',
-  },
   label: {
     fontSize: 14,
     fontFamily: 'Inter',
     fontWeight: 'bold',
   },
+  tabBarStyle: {
+  }
 });
 
 export default AppNavigator;
