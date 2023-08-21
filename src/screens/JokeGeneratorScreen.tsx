@@ -5,10 +5,7 @@ import { PanResponder } from 'react-native';
 
 import { ChatGPT_ApiKey } from '@env'
 
-import Header from '../components/JokeGenerator/Header';
-import JokeSetup from '../components/JokeGenerator/JokeSetup';
-import DragBar from '../components/JokeGenerator/DragBar';
-import TextInputSection from '../components/JokeGenerator/TextInputSection';
+import { DragBar, Header, JokeSetup, TextInputSection } from '../components/JokeGenerator';
 
 const { Configuration, OpenAIApi } = require("openai");
 
