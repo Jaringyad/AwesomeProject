@@ -13,11 +13,10 @@ const AppNavigator = () => {
       <Tab.Navigator
         screenOptions={{
           tabBarLabelPosition: "beside-icon",
-          tabBarLabelStyle: {
-            fontWeight: "700",
-            fontSize: 15
-          },
           tabBarIconStyle: { display: "none" },
+          tabBarLabelStyle: styles.tabBarLabel,
+          headerShown: false,
+          tabBarIcon: () => null,
         }}
       >
         <Tab.Screen
@@ -34,7 +33,7 @@ const AppNavigator = () => {
         />
         <Tab.Screen
           name="Exercise"
-          component={JokeGeneratorScreen}
+          component={ExerciseScreen}
         />
         <Tab.Screen
           name="Profile"
