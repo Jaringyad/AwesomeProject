@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { PanResponder } from 'react-native';
 
+import { ChatGPT_ApiKey } from '@env'
+
 import Header from '../components/JokeGenerator/Header';
 import JokeSetup from '../components/JokeGenerator/JokeSetup';
 import DragBar from '../components/JokeGenerator/DragBar';
@@ -20,7 +22,7 @@ const MyPage = () => {
 
   const configuration = new Configuration(
     {
-      apiKey: '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',
+      apiKey: ChatGPT_ApiKey,
     }
   );
 
@@ -42,7 +44,6 @@ const MyPage = () => {
     ]
     Only array
     `
-    console.log(prompt);
     try {
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -128,10 +129,9 @@ const MyPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#FFFFFF',
     fontFamily: 'Inter',
-
+    padding: 16
   },
   centerContent: {
     alignItems: 'center',

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
+import Header from '../components/NoteEditor/Header'
 
 const EditorScreen = () => {
   const editor = useRef(null);
@@ -15,7 +16,12 @@ const EditorScreen = () => {
   };
 
   return (
+    
     <View style={styles.container}>
+      <Header onPressBack={ () => {} } onPressNote={ () => {} }/>
+      <View>
+        <Text style={styles.textInputHeaderText}>After drag bar</Text>
+      </View>
       <RichEditor
         ref={editor}
         style={styles.editor}
@@ -48,6 +54,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 16
+  },
+  textInputHeaderText: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 16,
   },
   editor: {
     flex: 1,
