@@ -3,13 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 
-
-import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
-import ExerciseScreen from '../screens/ExerciseScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import EditorScreen from '../screens/EditorScreen';
-import JokeGeneratorScreen from '../screens/JokeGeneratorScreen';
+import { EditorScreen, ExerciseScreen, HomeScreen, JokeGeneratorScreen, ProfileScreen, SearchScreen } from '../screens';
 
 const Tab = createBottomTabNavigator();
 
