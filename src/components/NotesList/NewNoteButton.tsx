@@ -1,5 +1,3 @@
-// src/components/NotesList/NewNoteButton.tsx
-
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
@@ -17,11 +15,14 @@ const NewNoteButton: React.FC<NewNoteButtonProps> = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 1,
   },
   text: {
     color: 'red',
     fontSize: 16,
+    marginLeft: 15,
+    marginBottom: 15,
   },
 });
 
