@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 import SearchBar from '../components/Exercise/SearchBar';
 import TaskItem from '../components/Exercise/TaskItem';
 
@@ -15,6 +16,7 @@ interface TaskItemProps {
 }
 
 const ExerciseScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
   const [exercises, setExercises] = useState<Exercise[]>([
     { id: 1, name: 'Add punchline' },
@@ -27,8 +29,9 @@ const ExerciseScreen: React.FC = () => {
 
 
   const handleExercisePress = (exerciseId: number) => {
-    // TODO: Реализовать переход на соответствующий экран
-    // Например: navigation.navigate('ExerciseDetailScreen', { exerciseId });
+    if (exerciseId === 1) {
+      navigation.navigate('JokeSetupGenerator');
+    }
   };
 
   return (

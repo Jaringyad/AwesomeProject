@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { PanResponder } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 import { ChatGPT_ApiKey } from '@env'
 
@@ -10,6 +11,8 @@ import { DragBar, Header, JokeSetup, TextInputSection } from '../components/Joke
 const { Configuration, OpenAIApi } = require("openai");
 
 const MyPage = () => {
+  const navigation = useNavigation();
+
   const [dragBarHeight] = useState(8);
   const [startDragPosition, setStartDragPosition] = useState(0);
   const [centerContentHeight, setCenterContentHeight] = useState(200);
@@ -100,7 +103,7 @@ const MyPage = () => {
 
   return (
     <View style={styles.container}>
-      <Header onPressBack={() => { /* Handle back press */ }} />
+      <Header onPressBack={() => { navigation.navigate('Exercise') }} />
 
       {/* Joke Setup */}
       <Animatable.View

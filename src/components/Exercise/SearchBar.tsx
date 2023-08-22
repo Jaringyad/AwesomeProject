@@ -21,7 +21,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onTextChange, ...props }) 
 const styles = StyleSheet.create({
     searchInput: {
       fontSize: 16,
-      padding: 8,
+      paddingVertical: 8,
+      paddingHorizontal: 8,
       borderBottomColor: '#CCCCCC',
       borderBottomWidth: 1, // Толщина границы, как в компонентах Header
       borderTopWidth: 0,
