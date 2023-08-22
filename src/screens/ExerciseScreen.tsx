@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
-import SearchBar from '../components/Exercise/SearchBar';
-import TaskItem from '../components/Exercise/TaskItem';
+import { useNavigation } from '@react-navigation/native';
+import { SearchBar, TaskItem } from '../components/Exercise';
 
 interface Exercise {
   id: number;
