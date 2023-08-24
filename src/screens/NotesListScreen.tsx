@@ -1,56 +1,86 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { SearchBar, NewNoteButton, Dropdown } from '../components/NotesList';
+import realm, { NoteSchema, FolderSchema } from '../models/Note/NoteModel'
 
 
 const NotesListScreen = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
-  const handleNotePress = (noteId: string) => {
-    console.log(`Note with ID ${noteId} pressed.`);
-  };
+    const [folders, setFolders] = useState(realm.objects('Folder'));
 
-  const handleNewNote = () => {
-    console.log('New Note button pressed.');
-  };
+    useEffect(
+        () => {
+            function updateFolders() {
+                setFolders(realm.objects('Folder'))
+            }
+            const foldersData = realm.objects('Folder')
+            foldersData.addListener(updateFolders)
 
-  const folders = [
-    {
-      folderName: "Folder 1",
-      notes: [
-        { id: '1', title: 'Note 1' },
-        { id: '2', title: 'Note 2' },
-      ]
-    },
-    {
-      folderName: "Folder 2",
-      notes: [
-        { id: '3', title: 'Note 3' },
-      ]
-    }
-  ];
+            return () => {
+                foldersData.removeListener(updateFolders);
+            };
+        }, []
+    )
 
-  return (
-    <View style={styles.container}>
-      <SearchBar onChange={(e) => setSearchQuery(e.nativeEvent.text)} />
-      <NewNoteButton onPress={handleNewNote} />
-      {folders.map(folder => (
-        <Dropdown
-          key={folder.folderName}
-          folderName={folder.folderName}
-          notes={folder.notes}
-          onNotePress={handleNotePress}
-        />
-      ))}
-    </View>
-  );
+
+    const handleNotePress = (noteId: string) => {
+        console.log(`Note with ID ${noteId} pressed.`);
+    };
+
+    const handleNewNote = () => {
+        const existingFolders = realm.objects('Folder');
+        if (existingFolders.length === 0) {
+            realm.write(() => {
+                realm.create('Folder', {
+                    id: 1,
+                    folderName: 'Default Folder',
+                    notes: [],
+                });
+            });
+        }
+        realm.write(() => {
+            const newNoteId = realm.objects('Note').length + 1;
+            const newNote = {
+                id: newNoteId,
+                title: 'New Note',
+                content: '',
+                date: new Date(),
+            };
+            realm.create('Note', newNote);
+            // Добавьте новую запись в нужную папку или создайте новую папку
+            const folder = realm.objectForPrimaryKey('Folder', 1);
+            folder.notes.push(newNote);
+        });
+        // Перенаправление на экран редактирования
+    };
+
+    return (
+        <View style={styles.container}>
+            <SearchBar onChange={(e) => setSearchQuery(e.nativeEvent.text)} />
+            <NewNoteButton onPress={handleNewNote} />
+            {Array.from(folders).length > 0 ? (
+                Array.from(folders).map(folder => (
+                    <Dropdown
+                        key={folder.id}
+                        folderName={folder.folderName}
+                        notes={folder.notes}
+                        onNotePress={handleNotePress}
+                    />
+                ))
+            ) : (
+                <Text>Make your first note</Text>
+            )}
+
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
+    container: {
+        flex: 1,
+        padding: 10,
+    },
 });
 
 export default NotesListScreen;
